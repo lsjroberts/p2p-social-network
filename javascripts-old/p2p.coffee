@@ -13,12 +13,9 @@ class Peer
     constructor: (@name, @peers=[]) ->
 
 class Local extends Peer
-    constructor: (name, peers=[]) ->
-        super name, peers
-
     connect: (remote) ->
-        peer.connectToLocal(this)
-        this.peers.push(peer)
+        remote.connectToLocal(this)
+        this.peers.push(remote)
 
     send: (message) ->
         this.connection.send(message)
@@ -58,6 +55,12 @@ class Connection
         else
             logger.error('Could not send message, no channel set on connection.')
 
+    setLocalDescription: (desc) ->
+        this.rtcpc.setLocalDescription(desc)
+
+    setRemoteDescription: (desc) ->
+        this.rtcpc.setRemoteDescription(desc)
+
     onConnection: ->
         logger.trace('Connection.onConnection')
         this.channel = new DataChannel(this.channelName, this.rtcpc)
@@ -80,7 +83,10 @@ class LocalConnection extends Connection
     onOpen: ->
         super
         this.send("Hello Remote!")
-        
+
+    createOffer: (offer) ->
+        this.rtcpc.createOffer(offer)
+
 
 class RemoteConnection extends Connection
     onOpen: ->
@@ -102,7 +108,18 @@ class DataChannel extends Channel
             logger.error('Failed to create data connection with exception: ' + error)
 
 
+class Collection
+    constructor: (@items=[]) ->
+
+    add: (key, value) ->
+        this.items[key] = value
+
+    remove: (key) ->
+        this.items[key] = null
+
+
 logger = new Log;
-local = new Local;
+connections = new Collection
+local = new Local('Local');
 
 local.connect(new Remote('remote1'))
