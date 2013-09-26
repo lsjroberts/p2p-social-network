@@ -8,15 +8,19 @@
 
   (_base = window.RTC).Connection || (_base.Connection = {});
 
-  window.RTC.Connection.Local = (function(_super) {
-    __extends(Local, _super);
+  window.RTC.Connection.Remote = (function(_super) {
+    __extends(Remote, _super);
 
-    function Local() {
-      _ref = Local.__super__.constructor.apply(this, arguments);
+    function Remote() {
+      _ref = Remote.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    return Local;
+    Remote.prototype.createAnswer = function(answer) {
+      return this.conn.createAnswer(answer);
+    };
+
+    return Remote;
 
   })(window.RTC.Connection.Connection);
 

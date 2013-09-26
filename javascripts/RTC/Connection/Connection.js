@@ -6,11 +6,24 @@
 
   (_base = window.RTC).Connection || (_base.Connection = {});
 
+  /*
+  Handles a standard connection between two peers used to send data in one
+  direction from the local to the remote peer.
+  @author Laurence Roberts <lsjroberts@outlook.com
+  */
+
+
   window.RTC.Connection.Connection = (function() {
-    function Connection(local, remote) {
+    /*
+    Constructor.
+    @param string name
+    @param string channelName
+    */
+
+    function Connection(name, channelName) {
       var servers;
-      this.local = local;
-      this.remote = remote;
+      this.name = name;
+      this.channelName = channelName != null ? channelName : name + 'SendDataChannel';
       servers = null;
       this.conn = new RTCPeerConnection(servers, {
         optional: [
@@ -25,30 +38,87 @@
       this.conn.onclose = this.onClose;
     }
 
+    /*
+    Set the local description.
+    @param [type] desc
+    */
+
+
+    Connection.prototype.setLocalDescription = function(desc) {
+      return this.conn.setLocalDescription(desc);
+    };
+
+    /*
+    Set the remote description.
+    @param [type] desc
+    */
+
+
+    Connection.prototype.setRemoteDescription = function(desc) {
+      return this.conn.setRemoteDescription(desc);
+    };
+
+    /*
+    Create an offer to attempt to connect the local description to the remote
+    description.
+    @param [type] offer
+    */
+
+
+    Connection.prototype.createOffer = function(offer) {
+      return this.conn.createOffer(offer);
+    };
+
+    /*
+    Send a message to the remote peer.
+    @param mixed message
+    */
+
+
     Connection.prototype.send = function(message) {
-      window.Logger.trace('RTC.Connection.Connection->send');
+      Logger.trace('RTC.Connection.Connection->send');
       if (this.channel) {
         return this.channel.send(message);
       } else {
-        return window.Logger.error('Could not send message, no channel set on connection');
+        return Logger.error('Could not send message, no channel set on connection');
       }
     };
 
+    /*
+    Connection listener.
+    */
+
+
     Connection.prototype.onConnection = function() {
-      window.Logger.trace('RTC.Connection.Connection->onConnection');
-      return this.channel = new DataChannel('test', this.conn);
+      Logger.trace('RTC.Connection.Connection->onConnection');
+      return this.channel = new DataChannel(this.channelName, this.conn);
     };
+
+    /*
+    Interactive Connectivity Establishment (ICE) Candidate listener.
+    */
+
 
     Connection.prototype.onIceCandidate = function() {
-      return window.Logger.trace('RTC.Connection.Connection->onIceCandidate');
+      return Logger.trace('RTC.Connection.Connection->onIceCandidate');
     };
+
+    /*
+    Connection open listener.
+    */
+
 
     Connection.prototype.onOpen = function() {
-      return window.Logger.trace('RTC.Connection.Connection->onOpen');
+      return Logger.trace('RTC.Connection.Connection->onOpen');
     };
 
+    /*
+    Connection close listener.
+    */
+
+
     Connection.prototype.onClose = function() {
-      return window.Logger.trace('RTC.Connection.Connection->onClose');
+      return Logger.trace('RTC.Connection.Connection->onClose');
     };
 
     return Connection;

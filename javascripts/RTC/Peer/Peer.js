@@ -9,23 +9,7 @@
   window.RTC.Peer.Peer = (function() {
     function Peer(name) {
       this.name = name;
-      this.connections = [];
     }
-
-    Peer.prototype.connect = function(peer) {
-      return this.connections.push(new window.RTC.Connection.Local(this, peer));
-    };
-
-    Peer.prototype.send = function(message) {
-      var connection, _i, _len, _ref, _results;
-      _ref = this.connections;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        connection = _ref[_i];
-        _results.push(connection.send(message));
-      }
-      return _results;
-    };
 
     return Peer;
 
