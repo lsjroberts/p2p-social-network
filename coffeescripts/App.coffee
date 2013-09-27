@@ -1,12 +1,25 @@
-local = new window.RTC.Peer.Local 'foo'
+# connection = new RTC.Connection 'test'
 
-remote = new window.RTC.Peer.Remote 'bar'
+localVideo = document.querySelector('#local')
+remoteVideo = document.querySelector('#remote')
 
-###
-if local.connect(remote)
-    local.send("Hello")
-else
-    window.Logger.error("No way")
-###
+connection = new RTC.PeerConnection
 
-local.connect(remote)
+videoStream = new RTC.VideoStream(->
+    localVideo.src = videoStream.getSource()
+    localVideo.play()
+
+    connection.addStream(videoStream)
+)
+
+# local = new window.RTC.Peer.Local 'foo'
+
+# remote = new window.RTC.Peer.Remote 'bar'
+
+# local.connect(
+#     remote,
+#     ->
+#         local.send("Hello")
+#     ->
+#         Logger.error("FAILED")
+# )
