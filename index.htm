@@ -6,14 +6,27 @@
     <body>
         <h1>p2p social network</h1>
 
-        <video id="local" autoplay style="float: left; width: 600px; height: 600px; background: #000;"></video>
-        <video id="remote" autoplay style="float: right; width: 600px; height: 600px; background: #000;"></video>
+        <section>
+            <p>Your Peer ID: <span id="peerID"></span></p>
+        </section>
 
-        <script src="/vendor/adapter.js"></script>
+        <section>
+            <label>Connect To: <input id="connectID" type="text"></label>
+            <button id="connect">Connect</button>
+        </section>
+
+        <video id="localVideo" autoplay style="float: left; width: 200px; height: 200px; background: #000;"></video>
+        <video id="remoteVideo" autoplay style="float: right; width: 600px; height: 600px; background: #000;"></video>
+
+        <!--<script src="/vendor/adapter.js"></script>
         <script src="/javascripts/Logger.js"></script>
-        <!--<script src="/javascripts/RTC/Connection.js"></script>-->
         <script src="/javascripts/RTC/MediaStream.js"></script>
         <script src="/javascripts/RTC/PeerConnection.js"></script>
+        <script src="/javascripts/App.js"></script>-->
+
+        <script src="/vendor/peer.js"></script>
+        <script src="/javascripts/Logger.js"></script>
+        <script src="/javascripts/MediaStream.js"></script>
         <script src="/javascripts/App.js"></script>
     </body>
 </html>

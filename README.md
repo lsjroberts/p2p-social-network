@@ -58,8 +58,9 @@ videoStream = new RTC.VideoStream(->
 
 # Create the peer connection
 connection = new RTC.PeerConnection(->
-    # Add the local video stream to the connection, this will automatically share it
-    # with the remote peer.
+
+    # Add the local video stream to the connection, this will automatically
+    # share it with the remote peer.
     connection.addStream(videoStream)
 )
 
