@@ -51,17 +51,16 @@ A peer connection can be used to send a stream to a remote peer.
 localVideo = document.querySelector('#local')
 remoteVideo = document.querySelector('#remote')
 
+videoStream = new RTC.VideoStream(->
+    localVideo.src = videoStream.getSource()
+    localVideo.play()
+)
+
 # Create the peer connection
 connection = new RTC.PeerConnection(->
-
-    videoStream = new RTC.VideoStream(->
-        localVideo.src = videoStream.getSource()
-        localVideo.play()
-
-        # Add the local video stream to the connection, this will automatically share it
-        # with the remote peer.
-        connection.addStream(videoStream)
-    )
+    # Add the local video stream to the connection, this will automatically share it
+    # with the remote peer.
+    connection.addStream(videoStream)
 )
 
 # Attempt to fetch the remote stream from the peer.
@@ -82,6 +81,6 @@ connection.fetchStream((remoteStream) ->
 connection = new RTC.PeerConnection(->
 
     connection.send("Hello World!")
-    connection.sendJSON({foo: 'bar'})
+    connection.send({foo: 'bar'})
 )
 ```
