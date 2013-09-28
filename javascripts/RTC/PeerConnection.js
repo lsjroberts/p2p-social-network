@@ -38,12 +38,13 @@
   })();
 
   window.RTC.PeerConnection = (function() {
-    function PeerConnection(config, channel) {
+    function PeerConnection(servers, config, channel) {
       var self;
+      this.servers = servers != null ? servers : null;
       this.config = config != null ? config : null;
       this.channel = channel != null ? channel : new RTC.SignalingChannel;
       Logger.trace('RTC.PeerConnection->constructor');
-      this.conn = new RTCPeerConnection(config);
+      this.conn = new RTCPeerConnection(servers, config);
       this.conn.onicecandidate = this.onIceCandidate;
       this.conn.onaddstream = this.onAddStream;
       self = this;

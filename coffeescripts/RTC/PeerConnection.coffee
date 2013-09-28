@@ -27,10 +27,10 @@ class window.RTC.SignalingChannel
 
 
 class window.RTC.PeerConnection
-    constructor: (@config = null, @channel = new RTC.SignalingChannel) ->
+    constructor: (@servers = null, @config = null, @channel = new RTC.SignalingChannel) ->
         Logger.trace('RTC.PeerConnection->constructor')
 
-        this.conn = new RTCPeerConnection(config)
+        this.conn = new RTCPeerConnection(servers, config)
 
         this.conn.onicecandidate = this.onIceCandidate
         this.conn.onaddstream = this.onAddStream
