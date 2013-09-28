@@ -61,17 +61,17 @@ connection = new RTC.PeerConnection(->
         # Add the local video stream to the connection, this will automatically share it
         # with the remote peer.
         connection.addStream(videoStream)
-
-        # Attempt to fetch the remote stream from the peer.
-        connection.fetchStream((remoteStream) ->
-
-            # Pass the remote stream source to the video element.
-            remoteVideo.src = remoteStream.getSource()
-
-            # Play the video, rendering the stream to the element.
-            removeVideo.play()
-        )
     )
+)
+
+# Attempt to fetch the remote stream from the peer.
+connection.fetchStream((remoteStream) ->
+
+    # Pass the remote stream source to the video element.
+    remoteVideo.src = remoteStream.getSource()
+
+    # Play the video, rendering the stream to the element.
+    removeVideo.play()
 )
 ```
 
