@@ -40,18 +40,18 @@ class window.RTC.MediaStream
 
 class window.RTC.AudioStream extends window.RTC.MediaStream
     constructor: (successCallback, constraints = {}) ->
-        constraints.audio = true
+        constraints.audio or= true
         super successCallback, constraints
 
 
 class window.RTC.VideoStream extends window.RTC.MediaStream
     constructor: (successCallback, constraints = {}) ->
-        constraints.video = true
+        constraints.video or= true
         super successCallback, constraints
 
 
 class window.RTC.AudioVideoStream extends window.RTC.MediaStream
     constructor: (successCallback, constraints = {}) ->
-        constraints.video = true
-        constraints.audio = true
+        constraints.video or= true
+        constraints.audio or= true
         super successCallback, constraints

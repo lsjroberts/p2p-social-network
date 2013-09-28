@@ -59,7 +59,7 @@
       if (constraints == null) {
         constraints = {};
       }
-      constraints.audio = true;
+      constraints.audio || (constraints.audio = true);
       AudioStream.__super__.constructor.call(this, successCallback, constraints);
     }
 
@@ -74,7 +74,7 @@
       if (constraints == null) {
         constraints = {};
       }
-      constraints.video = true;
+      constraints.video || (constraints.video = true);
       VideoStream.__super__.constructor.call(this, successCallback, constraints);
     }
 
@@ -89,8 +89,8 @@
       if (constraints == null) {
         constraints = {};
       }
-      constraints.video = true;
-      constraints.audio = true;
+      constraints.video || (constraints.video = true);
+      constraints.audio || (constraints.audio = true);
       AudioVideoStream.__super__.constructor.call(this, successCallback, constraints);
     }
 
