@@ -8,29 +8,23 @@
         <link rel="stylesheet" href="/stylesheets/app.css">
     </head>
     <body>
-        <h1>Peer-to-Peer Social Network</h1>
+        <section class="row">
+            <h1>Peer-to-Peer Social Network</h1>
 
-        <section>
             <p>Your Peer ID: <span id="peerID"></span></p>
-        </section>
 
-        <section>
             <label>Connect To: <input id="connectID" type="text"></label>
             <button id="connect">Connect</button>
         </section>
 
-        <section class="video-group">
+        <section class="row video-group">
             <div class="local">
                 <div class="video-container">
                     <video autoplay data-stream="local"></video>
-                    <canvas></canvas>
                 </div>
             </div>
             <div class="remote">
-                <div class="video-container">
-                    <video autoplay data-stream="remote"></video>
-                    <canvas></canvas>
-                </div>
+
             </div>
         </section>
 
@@ -44,6 +38,7 @@
         <script src="/javascripts/Logger.js"></script>
         <script src="/javascripts/RTC/MediaStream.js"></script>
         <script src="/javascripts/Social/User.js"></script>
+        <script src="/javascripts/Social/Video.js"></script>
         <script src="/javascripts/App.js"></script>
     </body>
 </html>

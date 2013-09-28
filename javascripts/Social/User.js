@@ -4,16 +4,44 @@
 
   window.Social.User = (function() {
     function User(options) {
+      var self;
       if (options == null) {
         options = {};
       }
+      self = this;
       this.peerID = this.generatePeerID();
       this.peer = new Peer(this.peerID, options);
+      this.peer.on('open', function(id) {
+        Logger.trace('peer.on.open');
+        return Logger.log(id);
+      });
+      this.peer.on('connection', function(conn) {
+        Logger.trace('peer.on.connection');
+        return Logger.log(conn);
+      });
+      this.peer.on('call', function(call) {
+        Logger.trace('peer.on.call');
+        Logger.log(call);
+        return call.answer(self.video.stream.getStream());
+      });
+      this.peer.on('error', function(err) {
+        return Logger.error(err.message);
+      });
     }
 
-    User.prototype.call = function(remote, stream) {
+    User.prototype.call = function(connectID, parentNode) {
       var call;
-      return call = this.peer.call(remote.peerID, stream);
+      call = this.peer.call(connectID, this.video.stream.getStream());
+      return call.on('stream', function(stream) {
+        var remoteVideo;
+        Logger.trace('call.on.stream');
+        Logger.log(stream);
+        remoteVideo = document.createElement('video');
+        remoteVideo.autoplay = true;
+        remoteVideo.src = URL.createObjectURL(stream);
+        remoteVideo.play();
+        return parentNode.appendChild(remoteVideo);
+      });
     };
 
     User.prototype.send = function(remote, message) {
@@ -29,6 +57,10 @@
         _results.push(this.send(remote, message));
       }
       return _results;
+    };
+
+    User.prototype.setVideo = function(video) {
+      return this.video = video;
     };
 
     User.prototype.generatePeerID = function() {
