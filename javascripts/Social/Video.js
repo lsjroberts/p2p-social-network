@@ -7,7 +7,7 @@
       var self;
       self = this;
       this.video = document.querySelector('video[data-stream="local"]');
-      this.stream = new RTC.VideoStream(function() {
+      this.stream = new RTC.AudioVideoStream(function() {
         self.video.src = self.stream.getSource();
         return self.video.play();
       });

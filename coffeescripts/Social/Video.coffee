@@ -6,7 +6,7 @@ class window.Social.Video
 
         this.video = document.querySelector('video[data-stream="local"]')
 
-        this.stream = new RTC.VideoStream(->
+        this.stream = new RTC.AudioVideoStream(->
             self.video.src = self.stream.getSource()
             self.video.play()
         )
