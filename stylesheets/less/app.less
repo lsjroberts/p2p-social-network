@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Anonymous+Pro|Raleway);
+/*@import url(http://fonts.googleapis.com/css?family=Anonymous+Pro|Raleway);*/
 
 @brand: #68ca92;
 @brand-dark: darken(@brand, 10%);
@@ -7,13 +7,41 @@ html, body, h1, h2, h3, h4, h5, h6, p {
     font-family: "Raleway", sans-serif;
 }
 
+.row {
+    max-width: none;
+}
+
+#main-nav {
+    float: left;
+    padding: 20px;
+    box-shadow: 2px 0 4px #ccc;
+
+    section {
+        margin-bottom: 20px;
+        border-bottom: 4px solid #ccc;
+
+        &:last-child {
+            margin-bottom: 0;
+            border-bottom: 0;
+        }
+    }
+}
+
+#content {
+    float: left;
+    width: 100%;
+}
+
 .video-container {
     position: relative;
     overflow: hidden;
-    padding: 10px;
-    width: 400px;
-    height: 400px;
-    background: #333;
+    border: 4px solid #333;
+    .octagon-overlay(200px, 200px, 20px, #fff, #333);
+
+    &.local {
+        width: 200px;
+        height: 200px;
+    }
 
     video {
         position: absolute;
@@ -24,19 +52,19 @@ html, body, h1, h2, h3, h4, h5, h6, p {
     }
 }
 
-.video-group {
-    > .local {
-        float: left;
+#remote-video-group {
+    position: relative;
 
-        .video-container {
-            width: 200px;
-            height: 200px;
+    .video-container {
+        position: absolute;
+        transition: all .3s;
+
+        &.hide {
+            display: block;
+            width: 0;
+            height: 0;
+            -webkit-transform: rotate(10deg);
         }
-    }
-
-    > .remote {
-        float: left;
-        margin-left: 20px;
     }
 }
 

@@ -41,7 +41,11 @@ class window.Social.User
             remoteVideo.src = URL.createObjectURL(stream)
             remoteVideo.play()
 
-            parentNode.appendChild(remoteVideo)
+            container = document.createElement('div')
+            container.className = 'video-container'
+            container.appendChild(remoteVideo)
+
+            parentNode.appendChild(container)
         )
 
     send: (remote, message) ->

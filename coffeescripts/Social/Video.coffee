@@ -1,12 +1,12 @@
 window.Social or= {}
 
 class window.Social.Video
-    constructor: (selector) ->
+    constructor: (element) ->
         self = this
 
-        this.video = document.querySelector('video[data-stream="local"]')
+        this.video = element
 
-        this.stream = new RTC.AudioVideoStream(->
+        this.stream = new RTC.VideoStream(->
             self.video.src = self.stream.getSource()
             self.video.play()
         )

@@ -12,8 +12,7 @@
 
   document.querySelector('#connect').onclick = (function() {
     var connectID;
-    connectID = document.querySelector('#connectID').value;
-    return user.call(connectID, document.querySelector('.video-group .remote'));
+    return connectID = document.querySelector('#connectID').value;
   });
 
 }).call(this);

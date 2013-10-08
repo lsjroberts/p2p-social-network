@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Anonymous+Pro|Raleway);
+/*@import url(http://fonts.googleapis.com/css?family=Anonymous+Pro|Raleway);*/
 html,
 body,
 h1,
@@ -10,13 +10,60 @@ h6,
 p {
   font-family: "Raleway", sans-serif;
 }
+.row {
+  max-width: none;
+}
+#main-nav {
+  float: left;
+  padding: 20px;
+  box-shadow: 2px 0 4px #ccc;
+}
+#main-nav section {
+  margin-bottom: 20px;
+  border-bottom: 4px solid #ccc;
+}
+#main-nav section:last-child {
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+#content {
+  float: left;
+  width: 100%;
+}
 .video-container {
-  position: relative;
   overflow: hidden;
-  padding: 10px;
-  width: 400px;
-  height: 400px;
-  background: #333;
+  border: 4px solid #333;
+  position: relative;
+  z-index: 1;
+  width: 200px;
+  height: 200px;
+  background: #ffffff;
+}
+.video-container:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  content: "";
+  border-top: 20px solid #333333;
+  border-right: 20px solid transparent;
+  width: 0;
+  height: 0;
+}
+.video-container:after {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  content: "";
+  border-bottom: 20px solid #333333;
+  border-left: 20px solid transparent;
+  width: 0;
+  height: 0;
+}
+.video-container.local {
+  width: 200px;
+  height: 200px;
 }
 .video-container video {
   position: absolute;
@@ -25,14 +72,16 @@ p {
   width: 100%;
   height: 100%;
 }
-.video-group > .local {
-  float: left;
+#remote-video-group {
+  position: relative;
 }
-.video-group > .local .video-container {
-  width: 200px;
-  height: 200px;
+#remote-video-group .video-container {
+  position: absolute;
+  transition: all .3s;
 }
-.video-group > .remote {
-  float: left;
-  margin-left: 20px;
+#remote-video-group .video-container.hide {
+  display: block;
+  width: 0;
+  height: 0;
+  -webkit-transform: rotate(10deg);
 }

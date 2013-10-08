@@ -33,14 +33,17 @@
       var call;
       call = this.peer.call(connectID, this.video.stream.getStream());
       return call.on('stream', function(stream) {
-        var remoteVideo;
+        var container, remoteVideo;
         Logger.trace('call.on.stream');
         Logger.log(stream);
         remoteVideo = document.createElement('video');
         remoteVideo.autoplay = true;
         remoteVideo.src = URL.createObjectURL(stream);
         remoteVideo.play();
-        return parentNode.appendChild(remoteVideo);
+        container = document.createElement('div');
+        container.className = 'video-container';
+        container.appendChild(remoteVideo);
+        return parentNode.appendChild(container);
       });
     };
 

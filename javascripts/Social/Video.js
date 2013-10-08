@@ -3,11 +3,11 @@
   window.Social || (window.Social = {});
 
   window.Social.Video = (function() {
-    function Video(selector) {
+    function Video(element) {
       var self;
       self = this;
-      this.video = document.querySelector('video[data-stream="local"]');
-      this.stream = new RTC.AudioVideoStream(function() {
+      this.video = element;
+      this.stream = new RTC.VideoStream(function() {
         self.video.src = self.stream.getSource();
         return self.video.play();
       });

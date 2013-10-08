@@ -8,31 +8,27 @@
         <link rel="stylesheet" href="stylesheets/app.css">
     </head>
     <body>
-        <section class="row">
-            <h1>Peer-to-Peer Social Network</h1>
-
-            <p>Your Peer ID: <span id="peerID"></span></p>
-
-            <label>Connect To: <input id="connectID" type="text"></label>
-            <button id="connect">Connect</button>
-        </section>
-
-        <section class="row video-group">
-            <div class="local">
-                <div class="video-container">
+        <nav id="main-nav">
+            <section id="local-user">
+                <div class="video-container local-video">
                     <video autoplay data-stream="local"></video>
                 </div>
-            </div>
-            <div class="remote">
 
-            </div>
+                <p>Peer ID: <a href="#" id="peerID"></a></p>
+            </section>
+
+            <section>
+                <label>Connect To: <input id="connectID" type="text"></label>
+                <button id="connect">Connect</button>
+            </section>
+        </nav>
+
+        <section id="content">
+
+            <section id="remote-video-group" class="row video-group">
+
+            </section>
         </section>
-
-        <!--<script src="/vendor/adapter.js"></script>
-        <script src="/javascripts/Logger.js"></script>
-        <script src="/javascripts/RTC/MediaStream.js"></script>
-        <script src="/javascripts/RTC/PeerConnection.js"></script>
-        <script src="/javascripts/App.js"></script>-->
 
         <script src="vendor/peer.js"></script>
         <script src="javascripts/Logger.js"></script>
