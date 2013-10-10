@@ -11,7 +11,6 @@
       self = this;
       this.connections = {};
       storage = new Storage.Local('p2p');
-      storage.forget('peerID');
       this.peerID = (_ref = storage.get('peerID')) != null ? _ref : this.generatePeerID();
       storage.put('peerID', this.peerID);
       this.peer = new Peer(this.peerID, options);
