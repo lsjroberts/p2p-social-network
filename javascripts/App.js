@@ -22,7 +22,9 @@
     var shareLink;
     document.querySelector('[data-peer-id]').innerHTML = user.peerID;
     shareLink = document.querySelector('[data-peer-id-share]');
-    return shareLink.href = shareLink.href.replace('peerID', user.peerID);
+    if (shareLink != null) {
+      return shareLink.href = shareLink.href.replace('peerID', user.peerID);
+    }
   });
 
   localVideo = document.querySelector('[data-local-video]');

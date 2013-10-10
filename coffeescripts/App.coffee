@@ -12,7 +12,8 @@ user = new Social.User({key: 'xfptwovfgvi'})
 user.peer.on('open', ->
     document.querySelector('[data-peer-id]').innerHTML = user.peerID
     shareLink = document.querySelector('[data-peer-id-share]')
-    shareLink.href = shareLink.href.replace('peerID', user.peerID)
+    if shareLink?
+        shareLink.href = shareLink.href.replace('peerID', user.peerID)
 )
 
 
