@@ -8,23 +8,23 @@
     Logger.prototype.levels = {
       none: 0,
       error: 1,
-      trace: 2,
-      log: 3
+      log: 2,
+      trace: 3
     };
 
     Logger.prototype.setLevel = function(level) {
       this.level = level;
     };
 
-    Logger.prototype.log = function(thing) {
-      if (this.level >= this.levels.log) {
-        return console.log(thing);
-      }
-    };
-
     Logger.prototype.trace = function(text) {
       if (this.level >= this.levels.trace) {
         return console.log((performance.now() / 1000).toFixed(3) + ": " + text);
+      }
+    };
+
+    Logger.prototype.log = function(thing) {
+      if (this.level >= this.levels.log) {
+        return console.log(thing);
       }
     };
 
@@ -40,6 +40,6 @@
 
   window.Logger = new Logger;
 
-  window.Logger.setLevel(window.Logger.levels.log);
+  window.Logger.setLevel(window.Logger.levels.trace);
 
 }).call(this);

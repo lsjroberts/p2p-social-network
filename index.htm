@@ -5,33 +5,68 @@
 
         <link rel="stylesheet" href="vendor/normalize.css">
         <link rel="stylesheet" href="vendor/foundation.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
         <link rel="stylesheet" href="stylesheets/app.css">
     </head>
     <body>
         <nav id="main-nav">
             <section id="local-user">
-                <div class="video-container local-video">
+                <div class="video-container local-video" data-local-video>
+                    <i class="icon-camera icon-4x"></i>
                     <video autoplay data-stream="local"></video>
                 </div>
 
-                <p>Peer ID: <a href="#" id="peerID"></a></p>
+                <p>Peer ID: <span data-peer-id><i class="icon-spinner"></i></span></p>
+                <p><a href="/?connect=peerID" data-peer-id-share>Share this link to connect with other users</a></p>
             </section>
 
             <section>
-                <label>Connect To: <input id="connectID" type="text"></label>
-                <button id="connect">Connect</button>
+                <input type="text" placeholder="Enter a peer id..." data-connect-id>
+                <button class="button" data-connect><i class="icon-plus"></i> Connect</button>
             </section>
         </nav>
 
         <section id="content">
 
-            <section id="remote-video-group" class="row video-group">
+            <div id="remote-video-group" class="row video-group" data-video-group></div>
 
-            </section>
+            <div id="remote-chat-group" class="row" data-chat-group>
+                <div class="chat-rooms-list" data-chat-room-title-group>
+                    <h3 class="chat-room-title hide" data-chat-room-title-stub>
+                        <span data-peers-list>__peer__</span> <span data-new-message-count></span>
+                    </h3>
+                </div>
+
+                <div class="chat-rooms" data-chat-room-group>
+                    <div class="chat-room hide" data-chat-room-stub>
+                        <div class="messages">
+                            <div data-chat-messages></div>
+                        </div>
+
+                        <div class="create-message">
+                            <textarea placeholder="message..."></textarea>
+                            <button class="button small" data-chat-send><i class="icon-comment"></i> Send message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="contacts-list" data-contacts-list>
+            <h2>Contacts</h2>
+
+            <div class="contact hide" data-contact-stub>
+                <p><i class="icon-user"></i> <strong>__peer__</strong></p>
+
+                <button class="button small" data-chat-user="__peer__"><i class="icon-comment"></i> Chat</button>
+                <button class="button small" data-call-user="__peer__"><i class="icon-camera"></i> Video</button>
+            </div>
         </section>
 
         <script src="vendor/peer.js"></script>
         <script src="javascripts/Logger.js"></script>
+        <script src="javascripts/Storage/Local.js"></script>
         <script src="javascripts/RTC/MediaStream.js"></script>
         <script src="javascripts/Social/User.js"></script>
         <script src="javascripts/Social/Video.js"></script>

@@ -4,16 +4,20 @@
 
   window.Social.User = (function() {
     function User(options) {
-      var self;
+      var self, storage, _ref;
       if (options == null) {
         options = {};
       }
       self = this;
-      this.peerID = this.generatePeerID();
+      this.connections = {};
+      storage = new Storage.Local('p2p');
+      storage.forget('peerID');
+      this.peerID = (_ref = storage.get('peerID')) != null ? _ref : this.generatePeerID();
+      storage.put('peerID', this.peerID);
       this.peer = new Peer(this.peerID, options);
       this.peer.on('open', function(id) {
         Logger.trace('peer.on.open');
-        return Logger.log(id);
+        return Logger.log('Connected as: ' + id);
       });
       this.peer.on('connection', function(conn) {
         Logger.trace('peer.on.connection');
@@ -29,7 +33,7 @@
       });
     }
 
-    User.prototype.call = function(connectID, parentNode) {
+    User.prototype.call = function(connectID, parentNode, callback) {
       var call;
       call = this.peer.call(connectID, this.video.stream.getStream());
       return call.on('stream', function(stream) {
@@ -44,6 +48,32 @@
         container.className = 'video-container';
         container.appendChild(remoteVideo);
         return parentNode.appendChild(container);
+      });
+    };
+
+    User.prototype.connect = function(connectID, options) {
+      var connection, self;
+      if (options == null) {
+        options = {};
+      }
+      self = this;
+      connection = this.peer.connect(connectID, options);
+      connection.on('open', function() {
+        Logger.trace('connection.on.open');
+        self.addConnection(connection);
+        if (options.onOpen != null) {
+          return options.onOpen(connection);
+        }
+      });
+      connection.on('data', function(data) {
+        Logger.trace('connection.on.data');
+        return Logger.log(data);
+      });
+      connection.on('close', function() {
+        return Logger.trace('connection.on.close');
+      });
+      return connection.on('error', function() {
+        return Logger.trace('connection.on.error');
       });
     };
 
@@ -64,6 +94,14 @@
 
     User.prototype.setVideo = function(video) {
       return this.video = video;
+    };
+
+    User.prototype.addConnection = function(connection) {
+      return this.connections[connection.peer] = connection;
+    };
+
+    User.prototype.getConnection = function(peerID) {
+      return this.connections[peerID];
     };
 
     User.prototype.generatePeerID = function() {

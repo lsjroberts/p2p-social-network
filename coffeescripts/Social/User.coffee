@@ -4,12 +4,19 @@ class window.Social.User
     constructor: (options = {}) ->
         self = this
 
-        this.peerID = this.generatePeerID()
+        this.connections = {}
+
+        # Check local storage for peerID
+        storage = new Storage.Local('p2p')
+        storage.forget('peerID')
+        this.peerID = storage.get('peerID') ? this.generatePeerID()
+        storage.put('peerID', this.peerID)
+
         this.peer = new Peer(this.peerID, options)
 
         this.peer.on('open', (id) ->
             Logger.trace('peer.on.open')
-            Logger.log(id)
+            Logger.log('Connected as: ' + id)
         )
 
         this.peer.on('connection', (conn) ->
@@ -28,12 +35,14 @@ class window.Social.User
             Logger.error(err.message)
         )
 
-    call: (connectID, parentNode) ->
+    call: (connectID, parentNode, callback) ->
         call = this.peer.call(connectID, this.video.stream.getStream())
 
         call.on('stream', (stream) ->
             Logger.trace('call.on.stream')
             Logger.log(stream)
+
+            # parentNode = callback() ? parentNode
 
             remoteVideo = document.createElement('video')
             remoteVideo.autoplay = true
@@ -48,6 +57,32 @@ class window.Social.User
             parentNode.appendChild(container)
         )
 
+    connect: (connectID, options = {}) ->
+        self = this
+
+        connection = this.peer.connect(connectID, options)
+
+        connection.on('open', ->
+            Logger.trace('connection.on.open')
+            self.addConnection(connection)
+
+            if options.onOpen?
+                options.onOpen(connection)
+        )
+
+        connection.on('data', (data) ->
+            Logger.trace('connection.on.data')
+            Logger.log(data)
+        )
+
+        connection.on('close', ->
+            Logger.trace('connection.on.close')
+        )
+
+        connection.on('error', ->
+            Logger.trace('connection.on.error')
+        )
+
     send: (remote, message) ->
         this.peer.send(remote.peerID, message)
 
@@ -57,6 +92,12 @@ class window.Social.User
 
     setVideo: (video) ->
         this.video = video
+
+    addConnection: (connection) ->
+        this.connections[connection.peer] = connection
+
+    getConnection: (peerID) ->
+        this.connections[peerID]
 
     generatePeerID: ->
         Math.random().toString(36).substr(2, 10)

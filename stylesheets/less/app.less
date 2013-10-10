@@ -1,10 +1,17 @@
-/*@import url(http://fonts.googleapis.com/css?family=Anonymous+Pro|Raleway);*/
+@import url(http://fonts.googleapis.com/css?family=Anonymous+Pro|Raleway);
+/*@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css)*/
 
-@brand: #68ca92;
+@brand: #FEB751;
 @brand-dark: darken(@brand, 10%);
+@second: #36AA81;
+@third: #E84A71;
+
+.raleway {
+    font-family: "Raleway", sans-serif;
+}
 
 html, body, h1, h2, h3, h4, h5, h6, p {
-    font-family: "Raleway", sans-serif;
+    .raleway;
 }
 
 .row {
@@ -14,11 +21,12 @@ html, body, h1, h2, h3, h4, h5, h6, p {
 #main-nav {
     float: left;
     padding: 20px;
-    box-shadow: 2px 0 4px #ccc;
+    width: 240px;
+    /*box-shadow: 2px 0 4px #ccc;*/
 
     section {
         margin-bottom: 20px;
-        border-bottom: 4px solid #ccc;
+        border-bottom: 4px solid @second;
 
         &:last-child {
             margin-bottom: 0;
@@ -29,19 +37,14 @@ html, body, h1, h2, h3, h4, h5, h6, p {
 
 #content {
     float: left;
-    width: 100%;
+    width: 60%;
 }
 
 .video-container {
     position: relative;
     overflow: hidden;
-    border: 4px solid #333;
-    .octagon-overlay(200px, 200px, 20px, #fff, #333);
-
-    &.local {
-        width: 200px;
-        height: 200px;
-    }
+    border: 4px solid @brand;
+    .octagon-overlay(200px, 200px, 20px, #333, @brand);
 
     video {
         position: absolute;
@@ -52,11 +55,39 @@ html, body, h1, h2, h3, h4, h5, h6, p {
     }
 }
 
+#local-user {
+    .local-video {
+        margin-bottom: 20px;
+        .raleway;
+        line-height: 200px;
+        text-align: center;
+        color: #fff;
+    }
+}
+
+#contacts-list {
+    float: right;
+    padding: 20px;
+    width: 20%;
+
+    .contact {
+        margin-bottom: 20px;
+        padding: 20px;
+        border-right: 4px solid @third;
+        color: #fff;
+        background: #333;
+    }
+}
+
 #remote-video-group {
     position: relative;
+    padding: 20px;
 
     .video-container {
-        position: absolute;
+        float: left;
+        margin: 0 10px 20px;
+        width: 400px;
+        height: 400px;
         transition: all .3s;
 
         &.hide {
@@ -65,6 +96,32 @@ html, body, h1, h2, h3, h4, h5, h6, p {
             height: 0;
             -webkit-transform: rotate(10deg);
         }
+    }
+}
+
+#remote-chat-group {
+    padding: 20px;
+
+    .chat-rooms-list {
+        float: left;
+        width: 20%;
+
+        .chat-room-title {
+            margin: 0 0 10px;
+            padding: 10px;
+            font-size: 1em;
+            background: lighten(@third, 30%);
+
+            &.active {
+                color: #fff;
+                background: @brand;
+            }
+        }
+    }
+
+    .chat-room {
+        float: left;
+        width: 80%;
     }
 }
 
