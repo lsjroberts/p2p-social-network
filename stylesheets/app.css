@@ -76,8 +76,15 @@ p {
 }
 #local-user .local-video {
   margin-bottom: 20px;
+}
+#local-user .local-video:hover {
+  background: #36aa81;
+  cursor: pointer;
+}
+#local-user .local-video .placeholder {
+  margin-top: 45px;
+  padding: 0 20px;
   font-family: "Raleway", sans-serif;
-  line-height: 200px;
   text-align: center;
   color: #fff;
 }
