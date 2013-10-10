@@ -51,9 +51,6 @@
     contact.className = 'contact';
     contact.innerHTML = contact.innerHTML.replace(/__peer__/g, connection.peer);
     contactsList.appendChild(contact);
-    contactsList.lastChild.querySelector('[data-chat-user]').onclick = function() {
-      return openChat(this.getAttribute('data-chat-user'));
-    };
     return contactsList.lastChild.querySelector('[data-call-user]').onclick = function() {
       return openCall(this.getAttribute('data-call-user'));
     };

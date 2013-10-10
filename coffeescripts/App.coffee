@@ -46,8 +46,8 @@ appendContact = (connection) ->
     contact.innerHTML = contact.innerHTML.replace(/__peer__/g, connection.peer)
     contactsList.appendChild(contact)
 
-    contactsList.lastChild.querySelector('[data-chat-user]').onclick = ->
-        openChat(this.getAttribute('data-chat-user'))
+    # contactsList.lastChild.querySelector('[data-chat-user]').onclick = ->
+    #     openChat(this.getAttribute('data-chat-user'))
 
     contactsList.lastChild.querySelector('[data-call-user]').onclick = ->
         openCall(this.getAttribute('data-call-user'))
