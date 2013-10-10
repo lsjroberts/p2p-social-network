@@ -8,7 +8,7 @@ class window.Social.User
 
         # Check local storage for peerID
         storage = new Storage.Local('p2p')
-        storage.forget('peerID')
+        # storage.forget('peerID')
         this.peerID = storage.get('peerID') ? this.generatePeerID()
         storage.put('peerID', this.peerID)
 
