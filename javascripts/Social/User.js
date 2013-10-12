@@ -32,22 +32,22 @@
       });
     }
 
-    User.prototype.call = function(connectID, parentNode, callback) {
-      var call;
+    User.prototype.call = function(connectID) {
+      var call, container;
       call = this.peer.call(connectID, this.video.stream.getStream());
-      return call.on('stream', function(stream) {
-        var container, remoteVideo;
+      container = document.createElement('div');
+      container.className = 'video-container';
+      call.on('stream', function(stream) {
+        var remoteVideo;
         Logger.trace('call.on.stream');
         Logger.log(stream);
         remoteVideo = document.createElement('video');
         remoteVideo.autoplay = true;
         remoteVideo.src = URL.createObjectURL(stream);
         remoteVideo.play();
-        container = document.createElement('div');
-        container.className = 'video-container';
-        container.appendChild(remoteVideo);
-        return parentNode.appendChild(container);
+        return container.appendChild(remoteVideo);
       });
+      return container;
     };
 
     User.prototype.connect = function(connectID, options) {

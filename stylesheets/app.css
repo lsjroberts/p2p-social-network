@@ -17,6 +17,9 @@ p {
 .row {
   max-width: none;
 }
+.hide {
+  display: none !important;
+}
 #main-nav {
   float: left;
   padding: 20px;
@@ -110,15 +113,6 @@ p {
 #remote-video-group .video-container {
   float: left;
   margin: 0 10px 20px;
-  width: 400px;
-  height: 400px;
-  transition: all .3s;
-}
-#remote-video-group .video-container.hide {
-  display: block;
-  width: 0;
-  height: 0;
-  -webkit-transform: rotate(10deg);
 }
 #remote-chat-group {
   padding: 20px;

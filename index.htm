@@ -5,6 +5,7 @@
 
         <link rel="stylesheet" href="vendor/normalize.css">
         <link rel="stylesheet" href="vendor/foundation.min.css">
+        <link rel="stylesheet" href="vendor/animate.css">
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
         <link rel="stylesheet" href="stylesheets/app.css">
     </head>
@@ -21,8 +22,10 @@
             </section>
 
             <section>
-                <input type="text" placeholder="Enter a peer id..." data-connect-id>
-                <button class="button" data-connect><i class="icon-plus"></i> Connect</button>
+                <input type="text" name="name" placeholder="Enter your name..." data-name-field>
+                <button type="submit" class="button" data-save-name><i class="icon-ok"></i> Save</button>
+
+                <p class="hide" data-name-label>Hey <strong>__name__</strong></p>
             </section>
         </nav>
 
@@ -55,6 +58,11 @@
 
         <section id="contacts-list" data-contacts-list>
             <h2>Contacts</h2>
+
+            <section>
+                <input type="text" placeholder="Enter a peer id..." data-connect-id>
+                <button class="button" data-connect><i class="icon-plus"></i> Add Contact</button>
+            </section>
 
             <div class="contact hide" data-contact-stub>
                 <p><i class="icon-user"></i> <strong>__peer__</strong></p>

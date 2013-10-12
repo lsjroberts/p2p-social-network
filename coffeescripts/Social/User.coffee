@@ -8,7 +8,6 @@ class window.Social.User
 
         # Check local storage for peerID
         storage = new Storage.Local('p2p')
-        # storage.forget('peerID')
         this.peerID = storage.get('peerID') ? this.generatePeerID()
         storage.put('peerID', this.peerID)
 
@@ -35,14 +34,15 @@ class window.Social.User
             Logger.error(err.message)
         )
 
-    call: (connectID, parentNode, callback) ->
+    call: (connectID) ->
         call = this.peer.call(connectID, this.video.stream.getStream())
+
+        container = document.createElement('div')
+        container.className = 'video-container'
 
         call.on('stream', (stream) ->
             Logger.trace('call.on.stream')
             Logger.log(stream)
-
-            # parentNode = callback() ? parentNode
 
             remoteVideo = document.createElement('video')
             remoteVideo.autoplay = true
@@ -50,12 +50,10 @@ class window.Social.User
             remoteVideo.src = URL.createObjectURL(stream)
             remoteVideo.play()
 
-            container = document.createElement('div')
-            container.className = 'video-container'
             container.appendChild(remoteVideo)
-
-            parentNode.appendChild(container)
         )
+
+        return container
 
     connect: (connectID, options = {}) ->
         self = this

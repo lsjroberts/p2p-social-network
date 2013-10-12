@@ -1,3 +1,26 @@
+###
+Helpers
+###
+
+delay = (ms, fn) -> setTimeout fn, ms
+
+animateOut = (el, fn) ->
+    el.className = el.className + ' animated fadeOutUp'
+    delay 500, ->
+        el.className = el.className.replace(' animated fadeOutUp', ' hide')
+        if fn?
+            fn()
+
+animateIn = (el, fn) ->
+    el.className = (el.className + ' animated fadeInDown').replace('hide', '')
+    delay 500, ->
+        el.className = el.className.replace(' animated fadeInDown', '')
+        if fn?
+            fn()
+
+###
+Elements
+###
 contactsList = document.querySelector('[data-contacts-list]')
 
 chatGroup = document.querySelector('[data-chat-group]')
@@ -5,6 +28,18 @@ chatRoomTitleGroup = document.querySelector('[data-chat-room-title-group]')
 chatRoomGroup = document.querySelector('[data-chat-room-group]')
 chatRoomTitleStub = document.querySelector('[data-chat-room-title-stub]')
 chatRoomStub = document.querySelector('[data-chat-room-stub]')
+
+saveNameButton = document.querySelector('[data-save-name]')
+saveNameField  = document.querySelector('[data-name-field]')
+nameLabel = document.querySelector('[data-name-label]')
+
+
+###
+Data
+###
+
+# Get a reference to the local storage
+storage = new Storage.Local;
 
 
 # Create the user and display their peer id
@@ -16,6 +51,11 @@ user.peer.on('open', ->
         shareLink.href = shareLink.href.replace('peerID', user.peerID)
 )
 
+
+
+###
+Events
+###
 
 # Request the local video stream when the element is clicked
 localVideo = document.querySelector('[data-local-video]')
@@ -40,11 +80,27 @@ document.querySelector('[data-connect]').onclick = ->
     })
 
 
+# Check if the user already has a name
+if storage.has('name')
+    nameLabel.innerHTML = nameLabel.innerHTML.replace(/__name__/g, storage.get('name'))
+    animateOut(saveNameButton)
+    animateOut(saveNameField, -> animateIn(nameLabel))
+
+# Save the user's name
+saveNameButton.onclick = ->
+    name = saveNameField.value
+    storage.put('name', name)
+    animateOut(saveNameButton)
+    animateOut(saveNameField, -> animateIn(nameLabel))
+
+
 # Append a contact to the list
 appendContact = (connection) ->
     contact = document.querySelector('[data-contact-stub]').cloneNode(true)
+    contact.removeAttribute('data-contact-stub')
     contact.className = 'contact'
     contact.innerHTML = contact.innerHTML.replace(/__peer__/g, connection.peer)
+    animateIn(contact)
     contactsList.appendChild(contact)
 
     # contactsList.lastChild.querySelector('[data-chat-user]').onclick = ->
@@ -71,7 +127,9 @@ openChat = (connectID) ->
 
 # Video call a connected user
 openCall = (connectID) ->
-    user.call(connectID, document.querySelector('[data-video-group]'))
+    videoContainer = user.call(connectID)
+    animateIn(videoContainer)
+    document.querySelector('[data-video-group]').appendChild(videoContainer)
 
 
 
